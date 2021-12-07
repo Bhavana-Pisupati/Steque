@@ -33,56 +33,63 @@ public class Steque<Item> implements Iterable<Item> {
     private Item[] s;
     private int N;
     private int INIT_CAPACITY=10;
+    private int first;      // index of first element of queue
+    private int last;
     /**
      * constructs a steque object.
      */
     public Steque() {
         N=0;
         s = (Item[]) new Object[INIT_CAPACITY];
+        first=0;
+        last=0;
     }
     
     
     /**
-     * inserts an item in the steque in queue fashion.
+     * inserts an item in the steque in queue fashion. Time complexity: O(1), Space complexity: O(1)
      * @param item Item to be inserted.
      */
     public void enqueue(Item item) {
         if (item == null) throw new IllegalArgumentException();
         if (N == s.length) resize(2*s.length);
-        if( N==0 ) s[0]=item;
-        else{
-            for(int i=s.length-1; i > 0;i--) s[i] = s[i-1];
-        s[0]=item;}
+        if (first==0) first=s.length;
+        s[first-1]=item;
+        first=first-1;
         N++;
     }
     
     
     /**
-     * inserts an item in the steque in stack fashion.
+     * inserts an item in the steque in stack fashion. Time complexity: O(1), Space complexity: O(1)
      * @param item Item to be inserted.
      */
     public void push(Item item) {
         if (item == null) throw new IllegalArgumentException();
         if (N == s.length) resize(2*s.length);
-        s[N]=item;
+        s[last]=item;
+        last++;
+        if (last==s.length) last=0;
         N++;
     }
     
     /**
-     * pops a least recent item in steque.
+     * pops a least recent item in steque. Time complexity: O(1), Space complexity: O(1)
      * @return Item object from steque.
      */
     public Item pop() {
         if (isEmpty()) throw new NoSuchElementException("Stack underflow");
-        Item item=s[N-1];
-        s[N-1]=null;
+        if (last==0) last=s.length;
+        Item item=s[last-1];
+        s[last-1]=null;
+        last=last-1;
         N--;
         if (N > 0 && N == s.length/4) resize(s.length/2);
         return item;
     }
     
     /**
-     * checks to see if steque is empty.
+     * checks to see if steque is empty. Time complexity: O(1), Space complexity: O(1)
      * @return true if steque is empty, false otherwise.
      */
     public boolean isEmpty() {
@@ -90,23 +97,26 @@ public class Steque<Item> implements Iterable<Item> {
     }
     
     /**
-     * return the number of elements currently in the steque.
+     * return the number of elements currently in the steque. Time complexity: O(1), Space complexity: O(1)
      * @return size as integer.
      */
     public int size() {
         return N;
     }
-    // resize the underlying array holding the elements
+    // resize the underlying array holding the elements Time complexity: O(n), Space complexity: O(n)
     private void resize(int capacity) {
+        assert capacity >= N;
         Item[] copy = (Item[]) new Object[capacity];
-        for (int i = 0; i < N; i++) {
-            copy[i] = s[i];
-        }
+        for (int i = 0; i< N; i++) {
+            copy[i] = s[(first + i) % s.length];
+            }
         s = copy;
+        first = 0;
+        last  = N;
     }
     
     /**
-     * returns an iterator over the elements 
+     * returns an iterator over the elements Time complexity: O(n), Space complexity: O(n)
      * stored in steque.
      * 
      */
@@ -117,8 +127,13 @@ public class Steque<Item> implements Iterable<Item> {
     // an iterator, doesn't implement remove() since it's optional
     private class ReverseArrayIterator implements Iterator<Item> {
         private int i;
-
+        private Item[] copy;
         public ReverseArrayIterator() {
+            copy = (Item[]) new Object[N];
+            for (int i = 0; i< N; i++) {
+            copy[i] = s[(first + i) % s.length];
+            }
+            s = copy;
             i = N-1;
         }
 
