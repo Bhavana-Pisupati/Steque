@@ -47,7 +47,7 @@ public class Steque<Item> implements Iterable<Item> {
     
     
     /**
-     * inserts an item in the steque in queue fashion.
+     * inserts an item in the steque in queue fashion. Time complexity=O(1), Space complexity= O(n)
      * @param item Item to be inserted.
      */
     public void enqueue(Item item) {
@@ -62,7 +62,7 @@ public class Steque<Item> implements Iterable<Item> {
     
     
     /**
-     * inserts an item in the steque in stack fashion.
+     * inserts an item in the steque in stack fashion. Time complexity=O(1), Space complexity= O(n)
      * @param item Item to be inserted.
      */
     public void push(Item item) {
@@ -76,7 +76,7 @@ public class Steque<Item> implements Iterable<Item> {
     }
     
     /**
-     * pops a least recent item in steque.
+     * pops a least recent item in steque. Time complexity=O(1), Space complexity= O(1)
      * @return Item object from steque.
      */
     public Item pop() {
@@ -88,7 +88,7 @@ public class Steque<Item> implements Iterable<Item> {
     }
     
     /**
-     * checks to see if steque is empty.
+     * checks to see if steque is empty. Time complexity=O(1), Space complexity= O(1)
      * @return true if steque is empty, false otherwise.
      */
     public boolean isEmpty() {
@@ -96,7 +96,7 @@ public class Steque<Item> implements Iterable<Item> {
     }
     
     /**
-     * return the number of elements currently in the steque.
+     * return the number of elements currently in the steque. Time complexity=O(1), Space complexity= O(1)
      * @return size as integer.
      */
     public int size() {
@@ -104,7 +104,7 @@ public class Steque<Item> implements Iterable<Item> {
     }
     
     /**
-     * returns an iterator over the elements 
+     * returns an iterator over the elements  Time complexity=O(n), Space complexity= O(n)
      * stored in steque.
      * 
      */
@@ -134,20 +134,4 @@ public class Steque<Item> implements Iterable<Item> {
             return item;
         }
     }
-    // public static void main(String[] args){
-    //     Steque<Integer> s=new Steque<Integer>();
-    //     System.out.println("Isempty?"+s.isEmpty());
-    //     s.enqueue(1);
-    //     s.enqueue(2);
-    //     s.push(3);
-    //     s.push(4);
-    //     s.pop();
-    //     s.push(5);
-    //     Iterator<Integer> i = s.iterator();
-    //     while(i.hasNext()){
-    //         System.out.println(i.next());
-    //     }
-    //     System.out.println("size="+s.size());
-    //     System.out.println("Isempty?"+s.isEmpty());
-    // }
 }
